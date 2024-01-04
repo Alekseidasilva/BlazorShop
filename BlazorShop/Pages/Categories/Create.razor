@@ -1,6 +1,7 @@
 ﻿@page "/Categories/Create"
 
 @inject ApplicationDbContext Context
+@inject NavigationManager Navigation
 
 
 
@@ -31,6 +32,8 @@
     {
         await Context.Categories.AddAsync(Model);
         await Context.SaveChangesAsync();
+        Navigation.NavigateTo("categories");
+
     }
 
 }
