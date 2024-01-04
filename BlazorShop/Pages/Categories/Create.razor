@@ -1,5 +1,6 @@
 ﻿@page "/Categories/Create"
-@using BlazorShop.Models
+
+@inject ApplicationDbContext Context
 
 
 
@@ -26,9 +27,10 @@
 
     }
 
-    public Task OnValidSubmitAsync()
+    public async Task OnValidSubmitAsync()
     {
-
+        await Context.Categories.AddAsync(Model);
+        await Context.SaveChangesAsync();
     }
 
 }
