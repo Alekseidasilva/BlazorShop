@@ -6,7 +6,7 @@
 <h1>Nova Categoria</h1>
 
 
-<EditForm Model="@Model">
+<EditForm Model="@Model" OnValidSubmit="OnValidSubmitAsync">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="mb-3">
@@ -24,6 +24,11 @@
     protected override void OnInitialized()
     {
 
+    }
+
+    public Task OnValidSubmitAsync()
+    {
+        
     }
 
 }
