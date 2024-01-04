@@ -1,4 +1,4 @@
-                 # **Blazor com .NET 8** 
+                 # Blazor com .NET 8 
  ## Novos recursos do .NET 8 
  →SSG, SSR e SPA
  →SSR
