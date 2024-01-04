@@ -6,8 +6,12 @@
 
 
 <EditForm Model="@Model">
-    <InputText @bind-Value="Model.Title" />
-
+    <div class="mb-3">
+        <label class="form-label">Nome da Categoria</label>
+        <InputText @bind-Value="Model.Title" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Criar</button>
+    <a href="/categories" class="btn btn-danger">Cancelar </a>
 </EditForm>
 
 @code {
@@ -15,7 +19,7 @@
 
     protected override void OnInitialized()
     {
-        Model.Title = "Minha Incrivel Categoria";
+
     }
 
 }
