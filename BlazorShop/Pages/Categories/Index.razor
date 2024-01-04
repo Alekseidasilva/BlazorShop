@@ -1,5 +1,5 @@
 ﻿@page "/Categories"
-@using Microsoft.EntityFrameworkCore
+
 @inject ApplicationDbContext Context
 @attribute [StreamRendering(true)]
 
@@ -32,7 +32,8 @@ else
             {
                 <tr>
                     <td>@category.Id</td>
-                    <td>@category.Title</td>
+                    <td><a href="/Categories/@category.Id">@category.Title</a>
+                    </td>
                     <td>
                         <a href="/categories/Edit/@category.Id" class="btn btn-primary">Editar</a>
 
