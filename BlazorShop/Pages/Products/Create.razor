@@ -1,0 +1,55 @@
+﻿@page "/Products/Create"
+
+@inject ApplicationDbContext Context
+@inject NavigationManager Navigation
+@* @rendermode InteractiveServer *@
+
+
+<h1>Novo Producto</h1>
+
+
+<EditForm Model="@Model" OnValidSubmit="OnValidSubmitAsync">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-3">
+        <label class="form-label">Nome do Produto</label>
+        <InputText @bind-Value="Model.Title" class="form-control" />
+        <ValidationMessage For="() => Model.Title" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Preço</label>
+        <InputNumber @bind-Value="Model.Price" class="form-control" />
+        <ValidationMessage For="() => Model.Price" />
+    </div>
+
+
+
+    <div class="mb-3">
+        <label class="form-label">Descrição</label>
+        <InputText @bind-Value="Model.Description" class="form-control" />
+        <ValidationMessage For="() => Model.Description" />
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Criar</button>
+    <a href="/Products" class="btn btn-danger">Cancelar </a>
+</EditForm>
+
+@code {
+    public Product Model { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+    public async Task OnValidSubmitAsync()
+    {
+        await Context.Products.AddAsync(Model);
+        await Context.SaveChangesAsync();
+        Navigation.NavigateTo("Products");
+
+    }
+
+}

@@ -12,7 +12,7 @@ public class Product
     public string Title { get; set; } = string.Empty;
     public string? Description { get; set; } = string.Empty;
     [Required(ErrorMessage = "Infome o preço do Produto")]
-    [DataType(DataType.Currency)]
+    [DataType(DataType.Currency, ErrorMessage = "O Preço deve ser um número")]
     public decimal Price { get; set; }
 
 
