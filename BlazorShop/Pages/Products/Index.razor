@@ -1,0 +1,64 @@
+﻿@page "/Products"
+
+
+@inject ApplicationDbContext Context
+@attribute [StreamRendering(true)]
+
+<h1>Produtos</h1>
+<a href="/Products/Create" class="btn btn-success">Novo Produto</a>
+
+
+
+
+
+@if (!Products.Any())
+{
+    <p class="text-center">
+        <em>Carregando os Produtos... </em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome do Produto</th>
+                <th>Acções</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var product in Products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td><a href="/Categories/@product.Id">@product.Title</a></td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>@product.Category.Title</td>
+                    <td>@product.Description</td>
+                    <td>
+                        <a href="/Categories/Edit/@product.Id" class="btn btn-primary">Editar</a>&nbsp;
+                        <a href="/Categories/Delete/@product.Id" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+
+
+
+@code {
+
+    public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
+    protected override async Task OnInitializedAsync()
+    {
+        // await Task.Delay(5000);
+        Products = await Context.Products.AsNoTracking().ToListAsync();
+    }
+
+}
