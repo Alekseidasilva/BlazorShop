@@ -32,18 +32,19 @@ else
             {
                 <tr>
                     <td>@category.Id</td>
-                    <td><a href="/Categories/@category.Id">@category.Title</a>
+                    <td>
+                        <a href="/Categories/@category.Id">@category.Title</a>
                     </td>
                     <td>
                         <a href="/Categories/Edit/@category.Id" class="btn btn-primary">Editar</a>&nbsp;
                         @* <AuthorizeRouteView>
-                            @if (context.User.IsInRole("Admin"))
-                            {
-                             <a href="/Categories/Delete/@category.Id" class="btn btn-danger">Excluir</a>
-                            }
-                        </AuthorizeRouteView> *@
+                @if (context.User.IsInRole("Admin"))
+                {
+                <a href="/Categories/Delete/@category.Id" class="btn btn-danger">Excluir</a>
+                }
+                </AuthorizeRouteView> *@
                         <a href="/Categories/Delete/@category.Id" class="btn btn-danger">Excluir</a>
-                       
+
                     </td>
                 </tr>
             }
