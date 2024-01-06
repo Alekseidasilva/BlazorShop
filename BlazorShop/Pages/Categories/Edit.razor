@@ -2,26 +2,29 @@
 
 @inject ApplicationDbContext context
 @inject NavigationManager navigation
+@attribute [Authorize]
 
 
 
-
-@if(Model is null){
-<p class="text-center">
-<em>categoria não encontrada</em>
-</p>
-}else{
+@if (Model is null)
+{
+    <p class="text-center">
+        <em>categoria não encontrada</em>
+    </p>
+}
+else
+{
     <h1>@Model.Title (@Model.Id)</h1>
     <EditForm Model="@Model" OnValidSubmit="OnValidSubmitAsync">
-       <DataAnnotationsValidator />
-       <ValidationSummary />
-       <div class="mb-3">
-               <label class="form-label">Nome da Categoria</label>
-               <InputText @bind-Value="Model.Title" class="form-control" />
-               <ValidationMessage For="() => Model.Title" />
-           </div>
-           <button type="submit" class="btn btn-primary">Actualizar</button>
-           <a href="/categories" class="btn btn-danger">Cancelar </a>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="mb-3">
+            <label class="form-label">Nome da Categoria</label>
+            <InputText @bind-Value="Model.Title" class="form-control" />
+            <ValidationMessage For="() => Model.Title" />
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <a href="/categories" class="btn btn-danger">Cancelar </a>
     </EditForm>
 }
 
@@ -33,16 +36,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Model=await context
+        Model = await context
         .Categories
         .AsNoTracking()
-        .FirstOrDefaultAsync(x=>x.Id==Id);
+        .FirstOrDefaultAsync(x => x.Id == Id);
     }
-    
+
     public async Task OnValidSubmitAsync()
     {
-     context.Categories.Update(Model);
-     await context.SaveChangesAsync();
-     navigation.NavigateTo("Categories");
+        context.Categories.Update(Model);
+        await context.SaveChangesAsync();
+        navigation.NavigateTo("Categories");
     }
 }
