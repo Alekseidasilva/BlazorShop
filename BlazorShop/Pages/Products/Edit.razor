@@ -7,40 +7,43 @@
 
 
 
-@if(Model is null){
-     <p class="text-center">
-       <em>Produto não encontrada</em>
-     </p>
-}else{
+@if (Model is null)
+{
+    <p class="text-center">
+        <em>Produto não encontrado</em>
+    </p>
+}
+else
+{
     <h1>@Model.Title (@Model.Id)</h1>
     <EditForm Model="@Model" OnValidSubmit="OnValidSubmitAsync">
-       <DataAnnotationsValidator />
-       <ValidationSummary />
+        <DataAnnotationsValidator />
+        <ValidationSummary />
         <div class="mb-3">
-              <label class="form-label">Nome do Produto</label>
-              <InputText @bind-Value="Model.Title" class="form-control" />
-              <ValidationMessage For="() => Model.Title" />
-          </div>
-      
-          <div class="mb-3">
-              <label class="form-label">Preço</label>
-              <InputNumber @bind-Value="Model.Price" class="form-control" />
-              <ValidationMessage For="() => Model.Price" />
-          </div>
-          <div class="mb-3">
-              <label class="form-label">Categoria</label>
-              <InputSelect @bind-Value="Model.CategoryId" class="form-control">
-                  <option> Selecione</option>
-                  @foreach (var category in Categories)
-                  {
-                      <option value="@category.Id"> @category.Title</option>
-                  }
-              </InputSelect>
-              <ValidationMessage For="() => Model.CategoryId" />
-          </div>
-          
-           <button type="submit" class="btn btn-primary">Salvar</button>
-           <a href="/categories" class="btn btn-danger">Cancelar </a>
+            <label class="form-label">Nome do Produto</label>
+            <InputText @bind-Value="Model.Title" class="form-control" />
+            <ValidationMessage For="() => Model.Title" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Preço</label>
+            <InputNumber @bind-Value="Model.Price" class="form-control" />
+            <ValidationMessage For="() => Model.Price" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Categoria</label>
+            <InputSelect @bind-Value="Model.CategoryId" class="form-control form-select">
+                <option> Selecione</option>
+                @foreach (var category in Categories)
+                {
+                    <option value="@category.Id"> @category.Title</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => Model.CategoryId" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="/Categories" class="btn btn-danger">Cancelar </a>
     </EditForm>
 }
 
@@ -51,25 +54,25 @@
     public Product? Model { get; set; }
 
     public IEnumerable<Category> Categories { get; set; } = Enumerable.Empty<Category>();
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+
         Model = await context
             .Products
             .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == Id)??new ();
-        
-        
+            .FirstOrDefaultAsync(x => x.Id == Id) ?? new();
+
         Categories = await context
-            .Categories
-            .AsNoTracking()
-            .OrderBy(x => x.Title)
-            .ToListAsync();
+        .Categories
+        .AsNoTracking()
+        .OrderBy(x => x.Title)
+        .ToListAsync();
     }
-    
+
     public async Task OnValidSubmitAsync()
     {
-     context.Products.Update(Model);
-     await context.SaveChangesAsync();
-     navigation.NavigateTo("Categories");
+        context.Products.Update(Model);
+        await context.SaveChangesAsync();
+        navigation.NavigateTo("Products");
     }
 }
